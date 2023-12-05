@@ -18,17 +18,17 @@ public class TransferToServer {
             ServerSocket ss = listener.socket();
             ss.setReuseAddress(true);
             ss.bind(listenAddr);
-            System.out.println("Listening on port: " + listenAddr.toString());
+            System.out.println("Listening on port: " + listenAddr);
             return ss;
         } catch (IOException e) {
-            System.out.println("Failed to bind ,is port: " + listenAddr.toString() + " already in use? Error msg: "
+            System.out.println("Failed to bind ,is port: " + listenAddr + " already in use? Error msg: "
                     + e.getMessage());
             e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         port = ArgsUtil.getServerPort(args);
         TransferToServer dns = new TransferToServer();
         ServerSocket ss = dns.mySetup();

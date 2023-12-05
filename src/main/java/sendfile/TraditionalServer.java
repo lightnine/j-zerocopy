@@ -24,6 +24,11 @@ public class TraditionalServer {
                 try {
                     byte[] byteArray = new byte[4096];
                     while (true) {
+                        // read function cause user mode to kernel mode
+                        // DMA engine copy data from nic buffer to kernel buffer
+                        // then CPU copy data from kernel buffer to byteArray,
+                        // when read return, cause kernel mode to user mode
+                        // Summary: two context switch, two copy(one cpu copy)
                         int nread = input.read(byteArray, 0, 4096);
                         total = total + nread;
                         System.out.println("accepted total size:" + total);
@@ -35,13 +40,6 @@ public class TraditionalServer {
                 } catch (IOException e) {
                     System.out.println(e);
                 }
-
-//                try {
-//                    socket.close();
-//                    System.out.println("Connection closed by client");
-//                } catch (IOException e) {
-//                    System.out.println(e);
-//                }
             }
         } catch (IOException e) {
             System.out.println(e);
